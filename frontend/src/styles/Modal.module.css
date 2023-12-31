@@ -1,0 +1,54 @@
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.modalHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding: 20px;
+    gap: 20px;
+}
+
+.modalHeader img {
+    height: 500px;
+    width: 350px;
+    object-fit: cover;
+    border-radius: 5%;
+}
+
+
+.modalDescription {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.modalDescription p {
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    color: #333;
+}
+
+.modalDescription h3 {
+    font-family: 'Arial', sans-serif;
+    font-size: 2rem;
+    color: #333;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.movieActors {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+}

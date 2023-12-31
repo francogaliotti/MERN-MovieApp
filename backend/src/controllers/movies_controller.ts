@@ -146,7 +146,7 @@ export const filterByActor: RequestHandler = async (req, res, next) => {
     // eslint-disable-next-line prefer-const
     const actorId = req.params.id;
     try {
-        if (!mongoose.isValidObjectId(req.body.actorId)) {
+        if (!mongoose.isValidObjectId(actorId)) {
             throw createHttpError(400, "Invalid actor Id")
         }
         const actorMovies = await ActorMovie.find({ actorId }).exec();

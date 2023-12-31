@@ -6,7 +6,8 @@ const movieSchema = new Schema({
         required: true
     },
     description: {
-        type: String
+        type: String,
+        maxLength: 455
     },
     genderId: {
         type: Schema.Types.ObjectId,

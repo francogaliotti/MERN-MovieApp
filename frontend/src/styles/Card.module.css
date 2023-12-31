@@ -1,0 +1,37 @@
+.defaultCard {
+    width: 15rem;
+    /* Adjust the width as needed */
+    min-height: 300px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.defaultCardBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.defaultCard img {
+    height: 200px !important;
+    width: 150px !important;
+    object-fit: cover;
+    border-radius: 5%;
+}
+
+.card_title {
+    margin-top: 10px;
+    /* Adds some space between the image and title */
+    font-family: 'Arial', sans-serif;
+    /* Example font family */
+    font-size: 1.5rem;
+    /* Example font size */
+    color: #333;
+    /* Example color */
+    text-transform: uppercase;
+    /* Converts text to uppercase */
+}

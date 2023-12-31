@@ -8,6 +8,7 @@ import MongoStore from "connect-mongo";
 import genderRoutes from "./routes/gender_routes";
 import movieRoutes from "./routes/movie_routes";
 import actorRoutes from "./routes/actor_routes";
+import path from "path";
 
 const app = express();
 
@@ -28,9 +29,13 @@ app.use(session({
     })
 }))
 
+const uploadsPath = path.resolve(__dirname, '../');
+
+
 app.use("/api/genders", genderRoutes);
 app.use("/api/movies", movieRoutes);
 app.use("/api/actors", actorRoutes);
+app.use("/api/images", express.static(path.join(uploadsPath)));
 
 app.use((req, res, next) => {
     next(createHttpError(404, "Endpoint not found"))

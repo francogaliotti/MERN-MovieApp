@@ -139,7 +139,7 @@ export const filterByMovie: RequestHandler = async (req, res, next) => {
     const movieId = req.params.id;
     console.log(movieId)
     try {
-        if (!mongoose.isValidObjectId(req.body.movieId)) {
+        if (!mongoose.isValidObjectId(movieId)) {
             throw createHttpError(400, "Invalid movie Id")
         }
         const actorMovies = await ActorMovie.find({ movieId }).exec();
