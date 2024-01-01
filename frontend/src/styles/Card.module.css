@@ -1,5 +1,5 @@
 .defaultCard {
-    width: 15rem;
+    width: 14rem;
     /* Adjust the width as needed */
     min-height: 300px;
     text-decoration: none;
@@ -16,7 +16,7 @@
     text-align: center;
 }
 
-.defaultCard img {
+.defaultCardBody img {
     height: 200px !important;
     width: 150px !important;
     object-fit: cover;

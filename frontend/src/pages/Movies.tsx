@@ -4,11 +4,11 @@ import { DefaultCard } from '../components/DefaultCard';
 import { MovieModal } from '../components/MovieModal';
 import { Movie } from '../models/movie';
 import { getGenders, getMovies } from '../network/movie_api';
-import { Gender } from '../models/gender';
+import { Genre } from '../models/genre';
 
 export const Movies = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
-    const [genders, setGenders] = useState<Gender[]>([]);
+    const [genders, setGenders] = useState<Genre[]>([]);
     const [movieSelected, setMovieSelected] = useState<Movie | null>(null);
     useEffect(() => {
         const fetchMovies = async () => {
@@ -27,7 +27,7 @@ export const Movies = () => {
         <Container>
             <Row>
                 {movies.map((movie) => (
-                    <Col md={3}>
+                    <Col md={3} className='mb-3'>
                         <DefaultCard title={movie.title} img={movie.image} clickFunction={() => setMovieSelected(movie)} />
                     </Col>
                 )
@@ -36,7 +36,7 @@ export const Movies = () => {
 
             {
                 movieSelected && (
-                    <MovieModal onDismiss={() => setMovieSelected(null)} movie={movieSelected} genderName={(genders.find(gender => gender._id === movieSelected?.genderId)?.translation_en)} />
+                    <MovieModal onDismiss={() => setMovieSelected(null)} movie={movieSelected} genderName={(genders.find(gender => gender._id === movieSelected?.genderId)?.name)} />
                 )
             }
         </Container>

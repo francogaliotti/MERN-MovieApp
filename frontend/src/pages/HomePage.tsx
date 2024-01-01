@@ -11,9 +11,6 @@ const HomePage = () => {
                 <Col md={4}>
                     <DefaultCard title="Actors" url="actors" img="uploads/images/sections/actor.jpg" />
                 </Col>
-                <Col md={4}>
-                    <DefaultCard title="Genders" url="genders" img="uploads/images/sections/gender.jpg" />
-                </Col>
             </Row>
         </Container>
     )

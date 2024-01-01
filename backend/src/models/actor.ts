@@ -13,6 +13,10 @@ const actorSchema = new Schema({
         type: Date,
         required: true
     },
+    biography: {
+        type: String,
+        maxlength: 455
+    },
     image: {
         type: String
     }

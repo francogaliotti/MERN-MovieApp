@@ -40,6 +40,8 @@ interface CreateBody {
 }
 
 export const create: RequestHandler<unknown, unknown, CreateBody, unknown> = async (req, res, next) => {
+    console.log(req.body)
+    console.log(req.file)
     const { title, description, genderId, release_date } = req.body;
     let idGender;
     const image = req.file?.path;
@@ -55,6 +57,9 @@ export const create: RequestHandler<unknown, unknown, CreateBody, unknown> = asy
         }
         if (!release_date) {
             throw createHttpError(400, "Movie must have a release date");
+        }
+        if (description && description.length > 455) {
+            throw createHttpError(400, "Description must have less than 455 characters");
         }
         const note = await Movie.create({
             title,
@@ -89,6 +94,9 @@ export const update: RequestHandler = async (req, res, next) => {
         }
         if (!title) {
             throw createHttpError(400, "Movie must have a title")
+        }
+        if (description && description.length > 455) {
+            throw createHttpError(400, "Description must have less than 455 characters");
         }
         const movie = await Movie.findById(id).exec();
         if (!movie) {

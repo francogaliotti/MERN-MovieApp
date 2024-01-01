@@ -7,6 +7,8 @@ import { getActorsByMovie } from '../network/movie_api';
 import { Actor } from '../models/actor';
 import { DefaultCard } from './DefaultCard';
 import CarouselComponent from './CarouselComponent';
+import { FaPencilAlt, FaPlus, FaTrash } from "react-icons/fa";
+import { Button } from 'react-bootstrap';
 
 interface Props {
   onDismiss: () => void;
@@ -33,9 +35,14 @@ export const MovieModal = ({ onDismiss, movie, genderName }: Props) => {
       <Modal.Header className={`${styles.modalHeader}`} closeButton>
         <img src={movie.image ? process.env.REACT_APP_IMG_ENPOINT + movie.image : ""} alt="" />
         <div className={`${styles.modalDescription}`}>
-          <h3>{movie.title}</h3>
+          <h3>
+            {movie.title}{' '}
+            <Button variant="outline-secondary border-0"><FaPlus /></Button>{' '}
+            <Button variant="outline-secondary border-0"><FaTrash /></Button>{' '}
+            <Button variant="outline-secondary border-0"><FaPencilAlt /></Button>{' '}
+          </h3>
           <p>Release Date: {formatDate(movie.release_date)}</p>
-          <p>Gender: {genderName}</p>
+          <p>Genre: {genderName}</p>
           <p>{movie.description}</p>
           {movieActors.length < 4 ?
             <div className={`${styles.movieActors}`}>

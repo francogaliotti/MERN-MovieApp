@@ -15,7 +15,7 @@ const CarouselComponent = ({ objects }: Props) => {
     };
 
     const chunks = chunkArray(objects, 3); // Divide el array en chunks de 2 objetos cada uno
-
+console.log(chunks)
     return (
         <Carousel controls={false} indicators={false}>
             {chunks.map((chunk, index) => (

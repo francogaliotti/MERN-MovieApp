@@ -36,10 +36,11 @@ interface CreateBody {
     name?: string,
     lastname?: string,
     birth_date?: string,
+    biography?: string
 }
 
 export const create: RequestHandler<unknown, unknown, CreateBody, unknown> = async (req, res, next) => {
-    const { name, lastname, birth_date } = req.body;
+    const { name, lastname, birth_date, biography} = req.body;
     const image = req.file?.path;
     try {
         if (!name || !lastname) {
@@ -48,11 +49,15 @@ export const create: RequestHandler<unknown, unknown, CreateBody, unknown> = asy
         if (!birth_date) {
             throw createHttpError(400, "Birth Date is required")
         }
+        if (biography && biography.length > 455) {
+            throw createHttpError(400, "Biography must have less than 455 characters");
+        }
         const actor = await Actor.create({ 
             name, 
             lastname, 
             birth_date: new Date(birth_date),
-            image
+            image,
+            biography
         });
         res.status(201).json(actor);
     } catch (error) {
@@ -62,7 +67,7 @@ export const create: RequestHandler<unknown, unknown, CreateBody, unknown> = asy
 
 export const update: RequestHandler = async (req, res, next) => {
     const id = req.params.id;
-    const { name, lastname, birth_date } = req.body;
+    const { name, lastname, birth_date, biography } = req.body;
     const image = req.file?.path;
     try {
         if (!mongoose.isValidObjectId(id)){
@@ -74,11 +79,15 @@ export const update: RequestHandler = async (req, res, next) => {
         if (!birth_date) {
             throw createHttpError(400, "Birth Date is required")
         }
+        if (biography && biography.length > 455) {
+            throw createHttpError(400, "Biography must have less than 455 characters");
+        }
         const actor = await Actor.findByIdAndUpdate(id, {
             name,
             lastname, 
             birth_date: new Date(birth_date),
-            image
+            image,
+            biography
         }, { new: true }).exec();
         if (!actor) {
             throw createHttpError(404, "actor not found");

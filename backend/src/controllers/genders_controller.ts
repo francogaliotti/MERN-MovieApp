@@ -30,18 +30,15 @@ export const show: RequestHandler = async (req, res, next) => {
 
 interface CreateBody {
     name?: string,
-    translation_en?: string,
-    translation_es?: string,
-    translation_de?: string,
 }
 
 export const create: RequestHandler<unknown, unknown, CreateBody, unknown> = async (req, res, next) => {
-    const { name, translation_en, translation_es, translation_de } = req.body;
+    const { name   } = req.body;
     try {
         if (!name) {
             throw createHttpError(400, "Name is required")
         }
-        const gender = await Gender.create({ name, translation_en, translation_es, translation_de });
+        const gender = await Gender.create({ name  });
         res.status(201).json(gender);
     } catch (error) {
         next(error);
@@ -54,23 +51,17 @@ interface UpdateParams {
 
 interface UpdateBody {
     name?: string,
-    translation_en?: string,
-    translation_es?: string,
-    translation_de?: string,
 }
 
 export const update: RequestHandler<UpdateParams, unknown, UpdateBody, unknown> = async (req, res, next) => {
     const id = req.params.id;
-    const { name, translation_en, translation_es, translation_de } = req.body;
+    const { name } = req.body;
     try {
         if (!mongoose.isValidObjectId(id)){
             throw createHttpError(400, "Invalid Id")
         }
         const gender = await Gender.findByIdAndUpdate(id, {
-            name,
-            translation_en,
-            translation_es,
-            translation_de,
+            name
         }, { new: true }).exec();
         if (!gender) {
             throw createHttpError(404, "Gender not found");
