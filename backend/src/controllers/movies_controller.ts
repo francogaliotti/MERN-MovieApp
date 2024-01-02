@@ -201,6 +201,40 @@ export const addActorToMovie: RequestHandler<UpdateParams, unknown, AddActorBody
     }
 }
 
+interface AddActorsBody {
+    actorIds: string[]
+}
+
+export const addActors: RequestHandler<UpdateParams, unknown, AddActorsBody, unknown> = async (req, res, next) => {
+    const id = req.params.id;
+    const { actorIds } = req.body;
+    try {
+        if (!mongoose.isValidObjectId(id)) {
+            throw createHttpError(400, "Invalid movie Id")
+        }
+        const movie = await Movie.findById(id).exec();
+        if (!movie) {
+            throw createHttpError(404, "Movie not found");
+        }
+        const actors = await Actor.find({ _id: { $in: actorIds } }).exec();
+        if (!actors) {
+            throw createHttpError(404, "Actor not found");
+        }
+        const actorMovies = [];
+        for (const actorId of actorIds) {
+            const exist = await ActorMovie.findOne({ actorId: actorId, movieId: id }).exec();
+            if (exist) {
+                continue;
+            }
+            const actorMovie = await ActorMovie.create({ actorId: actorId, movieId: id });
+            actorMovies.push(actorMovie);
+        }
+        res.status(200).json(actorMovies);
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, cb) => {

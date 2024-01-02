@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Form } from 'react-bootstrap'
 import { FieldError, RegisterOptions, UseFormRegister } from 'react-hook-form'
 
@@ -8,9 +9,11 @@ interface TextInputFieldProps {
     registerOptions?: RegisterOptions,
     error?: FieldError,
     [x: string]: any,
+
 }
 
 export const TextInputField = ({ name, label, register, registerOptions, error, ...props }: TextInputFieldProps) => {
+
     return (
         <Form.Group controlId={name + "-input"} className='mb-3'>
             <Form.Label>{label}</Form.Label>

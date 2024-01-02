@@ -143,6 +143,46 @@ export const addMovieToActor: RequestHandler<unknown, unknown, addMovieBody, unk
     }
 }
 
+interface addMoviesBody {
+    movieIds: string[]
+}
+
+interface UpdateParams {
+    id: string
+
+}
+
+export const addMovies: RequestHandler<UpdateParams, unknown, addMoviesBody, unknown> = async (req, res, next) => {
+    const id = req.params.id;
+    const { movieIds } = req.body;
+    try {
+        if (!mongoose.isValidObjectId(id)){
+            throw createHttpError(400, "Invalid actor Id")
+        }
+        const actor = await Actor.findById(id).exec();
+        if (!actor) {
+            throw createHttpError(404, "Actor not found");
+        }
+        const movies = await Movie.find({ _id: { $in: movieIds } }).exec();
+        if (movies.length !== movieIds.length) {
+            throw createHttpError(404, "One or more movies not found");
+        }
+        const actorMovies = [];
+        for (const movieId of movieIds) {
+            const exists = await ActorMovie.findOne({ actorId: id, movieId: movieId }).exec();
+            if (exists) {
+                continue;
+            }
+            const actorMovie = await ActorMovie.create({ actorId: id, movieId: movieId });
+            actorMovies.push(actorMovie);
+        }
+        res.status(200).json(actorMovies);
+    } catch (error) {
+        next(error);
+    }
+
+}
+
 export const filterByMovie: RequestHandler = async (req, res, next) => {
     // eslint-disable-next-line prefer-const
     const movieId = req.params.id;

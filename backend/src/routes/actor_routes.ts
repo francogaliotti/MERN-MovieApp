@@ -8,7 +8,7 @@ router.get("/:id", ActorController.show)
 router.post("/", ActorController.upload, ActorController.create);
 router.patch("/:id", ActorController.upload, ActorController.update);
 router.delete("/:id", ActorController.destroy);
-router.post("/addMovieToActor", ActorController.addMovieToActor);
 router.get("/movie/:id", ActorController.filterByMovie);
+router.post("/movies/:id", ActorController.addMovies);
 
 export default router;

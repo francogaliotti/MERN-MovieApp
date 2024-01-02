@@ -13,9 +13,12 @@ import { FaPencilAlt, FaPlus, FaTrash } from 'react-icons/fa';
 interface Props {
     onDismiss: () => void;
     actor: Actor;
+    onDelete: (id: string) => void;
+    openEdit: () => void;
+    openMultiSelect: () => void;
 }
 
-export const ActorModal = ({ onDismiss, actor }: Props) => {
+export const ActorModal = ({ onDismiss, actor, onDelete, openEdit, openMultiSelect }: Props) => {
     const [actorMovies, setActorMovies] = useState<Movie[]>([]);
 
     useEffect(() => {
@@ -29,15 +32,13 @@ export const ActorModal = ({ onDismiss, actor }: Props) => {
 
     return (
         <Modal className={`${styles.modalContent}`} size='xl' show onHide={onDismiss} >
-
-
             <Modal.Header className={`${styles.modalHeader}`} closeButton>
                 <img src={actor.image ? process.env.REACT_APP_IMG_ENPOINT + actor.image : ""} alt="" />
                 <div className={`${styles.modalDescription}`}>
                     <h3>{actor.name} {actor.lastname}{' '}
-                        <Button variant="outline-secondary border-0"><FaPlus /></Button>{' '}
-                        <Button variant="outline-secondary border-0"><FaTrash /></Button>{' '}
-                        <Button variant="outline-secondary border-0"><FaPencilAlt /></Button>{' '}</h3>
+                        <Button variant="outline-secondary border-0" onClick={openMultiSelect}><FaPlus /></Button>{' '}
+                        <Button variant="outline-secondary border-0" onClick={()=>onDelete(actor._id)}><FaTrash /></Button>{' '}
+                        <Button variant="outline-secondary border-0" onClick={openEdit}><FaPencilAlt /></Button>{' '}</h3>
                     <p>Birth Date: {formatDate(actor.birth_date)}</p>
                     <p>{actor.biography}</p>
                     {actorMovies.length < 4 ?

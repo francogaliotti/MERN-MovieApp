@@ -14,9 +14,12 @@ interface Props {
   onDismiss: () => void;
   movie: Movie;
   genderName?: string;
+  onDelete: (id: string) => void;
+  openEdit: () => void;
+  openMultiSelect: () => void;
 }
 
-export const MovieModal = ({ onDismiss, movie, genderName }: Props) => {
+export const MovieModal = ({ onDismiss, movie, genderName, onDelete, openEdit, openMultiSelect }: Props) => {
   const [movieActors, setMovieActors] = useState<Actor[]>([]);
 
   useEffect(() => {
@@ -37,9 +40,9 @@ export const MovieModal = ({ onDismiss, movie, genderName }: Props) => {
         <div className={`${styles.modalDescription}`}>
           <h3>
             {movie.title}{' '}
-            <Button variant="outline-secondary border-0"><FaPlus /></Button>{' '}
-            <Button variant="outline-secondary border-0"><FaTrash /></Button>{' '}
-            <Button variant="outline-secondary border-0"><FaPencilAlt /></Button>{' '}
+            <Button variant="outline-secondary border-0" onClick={openMultiSelect}><FaPlus /></Button>{' '}
+            <Button variant="outline-secondary border-0" onClick={() => onDelete(movie._id)}><FaTrash /></Button>{' '}
+            <Button variant="outline-secondary border-0" onClick={openEdit}><FaPencilAlt /></Button>{' '}
           </h3>
           <p>Release Date: {formatDate(movie.release_date)}</p>
           <p>Genre: {genderName}</p>

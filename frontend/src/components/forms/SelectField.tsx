@@ -22,7 +22,7 @@ export const SelectField = ({ name, label, options, register, registerOptions, e
     useEffect(() => {
         setValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [options]);
 
     return (
         <Form.Group controlId={name + "-select"} className='mb-3'>

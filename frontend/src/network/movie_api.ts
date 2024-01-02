@@ -25,7 +25,7 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
 export interface MovieInput {
     title: string,
     description: string,
-    release_date: string,
+    release_date: Date,
     image: File[],
     genderId: string
 }
@@ -33,7 +33,7 @@ export interface MovieInput {
 export interface ActorInput {
     name: string,
     lastname: string,
-    birth_date: string,
+    birth_date: Date,
     biography: string,
     image: File[],
 }
@@ -130,5 +130,27 @@ export async function deleteActor(id: string): Promise<void> {
     await fetchData(`/api/actors/${id}`, {
         method: "DELETE"
     });
+}
+
+export async function addActorsToMovie(id: string, actorIds: string[]): Promise<ActorMovie[]> {
+    const response = await fetchData(`/api/movies/actors/${id}`, {
+        method: "POST",
+        body: JSON.stringify({actorIds}),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    return await response.json();
+}
+
+export async function addMoviesToActor(id: string, movieIds: string[]): Promise<ActorMovie[]> {
+    const response = await fetchData(`/api/actors/movies/${id}`, {
+        method: "POST",
+        body: JSON.stringify({movieIds}),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    return await response.json();
 }
 
